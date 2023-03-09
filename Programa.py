@@ -9,7 +9,7 @@ for line in fileinput.input():
     lines.append(line)
 
 key = lines[0]
-plaintext = lines[0]
+plaintext = lines[1]
 
 S = 0
 def KSA(key):
