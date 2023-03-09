@@ -1,15 +1,15 @@
-#Programa que cifra con RC4
+#Programa que cifra empleando RC4
 #Antonio Roblero Alejandro Jesús
 #Rojas Méndez Gabriel
 
 import fileinput
 
 lines = []
-for line in fileinput.input():
+for line in fileinput.input(encoding="utf-8"):
     lines.append(line)
 
-key = lines[0]
-plaintext = lines[1]
+key = str.strip(lines[0])
+plaintext = str.strip(lines[1])
 
 S = 0
 def KSA(key):
