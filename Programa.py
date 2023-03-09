@@ -1,3 +1,7 @@
+#Programa que cifra con RC4
+#Antonio Roblero Alejandro Jesús
+#Rojas Méndez Gabriel
+
 import fileinput
 
 lines = []
