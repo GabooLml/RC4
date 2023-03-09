@@ -1,24 +1,43 @@
-def rc4(key, plaintext):
-    S = list(range(256))
-    j = 0
-    out = []
+import fileinput
 
-    # KSA
-    for i in range(255):
-        j = (j + S[i] + key[i % len(key)]) % 256
+lines = []
+for line in fileinput.input():
+    lines.append(line)
+
+key = lines[0]
+plaintext = lines[0]
+
+S = 0
+def KSA(key):
+    global S
+    S = [0] * 256
+    for i in range(256):
+        S[i] = i
+    j = 0
+    for i in range(256):
+        j = (j + S[i] + ord(key[i % len(key)])) % 256
         S[i], S[j] = S[j], S[i]
 
-    # PRGA
-    i = j = 0
-    for char in plaintext:
+i = 0 
+j = 0 
+def Encrypt(plain):
+    global i
+    global j
+    encrypted = []
+    for x in range(len(plain)):
         i = (i + 1) % 256
         j = (j + S[i]) % 256
         S[i], S[j] = S[j], S[i]
-        out.append(chr(ord(char) ^ S[(S[i] + S[j]) % 256]))
+        K = S[(S[i] + S[j]) % 256]
+        encrypted.append(ord(plain[x]) ^ K)
 
-    return ''.join(out)
+    return encrypted
 
-key = 'Key'
-plaintext = 'Plaintext'
+def imprimir(res):
+    str = ""
+    for i in res:
+        str += "{0:02x}".format(i)
+    return str.upper()
 
-rc4(key,plaintext)
+KSA(key)
+print(imprimir(Encrypt(plaintext)))
